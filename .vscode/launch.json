@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "debug",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "preLaunchTask": "build-debug",
+      "program": "${workspaceFolder}/TwitchNotify.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}
