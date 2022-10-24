@@ -37,7 +37,7 @@
 // WParam contains HINTERNET handle for websocket, or NULL when disconnected
 #define WM_TWITCH_NOTIFY_WEBSOCKET (WM_USER + 3)
 
-// sent when websocked receives live status update for user
+// sent when websocket receives live status update for user
 // WParam is UserId, LParam is true when user goes live, false when goes offline
 #define WM_TWITCH_NOTIFY_USER_STATUS (WM_USER + 4)
 
@@ -664,7 +664,7 @@ static void LoadUsers(void)
 
 			// no notification is shown initially
 			User->Notification = NULL;
-			
+
 			QuerySize = StrCatChainW(Query, ARRAYSIZE(Query), QuerySize, Delim);
 			QuerySize = StrCatChainW(Query, ARRAYSIZE(Query), QuerySize, L"\\\"");
 			QuerySize = StrCatChainW(Query, ARRAYSIZE(Query), QuerySize, NewUsers[NewIndex]);
@@ -1147,7 +1147,7 @@ static void OnFollowedUsers(JsonObject* Json)
 
 	WCHAR Users[32768];
 	int UsersLength = 0;
-	
+
 	int Count = JsonArray_GetCount(Edges);
 	for (int Index = 0; Index < Count; Index++)
 	{
