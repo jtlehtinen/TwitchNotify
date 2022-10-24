@@ -239,7 +239,7 @@ static void OpenMpvUrl(LPCWSTR Url)
 
 static void GetTwitchIcon(LPWSTR ImagePath)
 {
-	int TempLength = GetTempPathW(MAX_PATH, ImagePath);
+	DWORD TempLength = GetTempPathW(MAX_PATH, ImagePath);
 	Assert(TempLength);
 	wsprintfW(ImagePath + TempLength, L"twitch.png");
 
@@ -422,7 +422,7 @@ static void GetImagePath(LPWSTR ImagePath, LPCWSTR ImageUrl)
 	int  ImageUrlLength = lstrlenW(ImageUrl);
 	uint64_t Hash = GetFnv1Hash(ImageUrl, ImageUrlLength * sizeof(WCHAR));
 
-	int TempLength = GetTempPathW(MAX_PATH, ImagePath);
+	DWORD TempLength = GetTempPathW(MAX_PATH, ImagePath);
 	Assert(TempLength);
 
 	LPWSTR Extension = StrRChrW(ImageUrl, ImageUrl + ImageUrlLength, L'.');
@@ -1457,7 +1457,7 @@ void WinMainCRTStartup(void)
 	};
 
 	// check if TwitchNotify is already running
-	HWND Existing = FindWindowW(WindowClass.lpszClassName, NULL);
+	HWND Existing = FindWindowExW(HWND_MESSAGE, NULL, WindowClass.lpszClassName, NULL);
 	if (Existing)
 	{
 		PostMessageW(Existing, WM_TWITCH_NOTIFY_ALREADY_RUNNING, 0, 0);
@@ -1505,8 +1505,7 @@ void WinMainCRTStartup(void)
 	Assert(WM_TASKBARCREATED);
 
 	State.Window = CreateWindowExW(0, WindowClass.lpszClassName, WindowClass.lpszClassName,
-		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-		CW_USEDEFAULT, NULL, NULL, WindowClass.hInstance, NULL);
+		0, 0, 0, 0, 0, HWND_MESSAGE, NULL, WindowClass.hInstance, NULL);
 	Assert(State.Window);
 
 	// start background websocket thread
